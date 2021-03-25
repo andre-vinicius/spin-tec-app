@@ -39,20 +39,4 @@ class PedidoItem extends Model
      */
     public $timestamps = false;
 
-    /**
-     * Inverso
-     */
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    /**
-     * Um para muitos
-     */
-    public function comments()
-    {
-        return $this->hasMany(Comment::class);
-    }
-
 }

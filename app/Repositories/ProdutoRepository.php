@@ -13,23 +13,25 @@ class ProdutoRepository
 
     /**
      * @param Produto $produto
+     * @return bool
      */
     public function cadastrar(Produto $produto)
     {
-        $produto->save();
+        return $produto->save();
     }
 
     /**
-     * @param int $id
      * @param Produto $produto
+     * @return bool
      */
     public function atualizar(Produto $produto)
     {
-        $produto->save();
+        return $produto->save();
     }
 
     /**
      * Listar todos os produtos
+     *
      * @return Produto[]|\Illuminate\Database\Eloquent\Collection
      */
     public function listarTodos()

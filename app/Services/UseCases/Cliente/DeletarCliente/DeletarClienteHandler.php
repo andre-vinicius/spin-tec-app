@@ -20,7 +20,7 @@ class DeletarClienteHandler extends ClienteHandler
         $id = $command->getId();
 
         /** @var Cliente $cliente */
-        $cliente = $this->clienteRepository->buscaId($id);
+        $cliente = $this->clienteRepository->buscaPorId($id);
 
         $cliente->setAtivo(false);
 

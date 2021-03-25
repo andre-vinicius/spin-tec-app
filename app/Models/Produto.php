@@ -42,7 +42,7 @@ class Produto extends Model
     /**
      * The users that belong to the role.
      */
-    public function Pedido()
+    public function pedido()
     {
         return $this->belongsToMany(Pedido::class, 'PedidoItem', 'idPedido', 'idProduto');
     }
@@ -95,7 +95,7 @@ class Produto extends Model
      */
     public function getValorUnitario(): float
     {
-        return $valorUnitario;
+        return $this->valorUnitario;
     }
 
     /**

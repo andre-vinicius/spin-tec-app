@@ -48,6 +48,14 @@ class Pedido extends Model
     }
 
     /**
+     * Inverso
+     */
+    public function status()
+    {
+        return $this->belongsTo(Status::class, 'idStatus', 'idStatus');
+    }
+
+    /**
      * Muitos para muitos
      */
     public function produtos()

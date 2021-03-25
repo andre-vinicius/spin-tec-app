@@ -13,35 +13,30 @@ class PedidoRepository
 
     /**
      * @param Pedido $pedido
+     * @return bool
      */
     public function cadastrar(Pedido $pedido)
     {
-
+        return $pedido->save();
     }
 
     /**
-     * @param int $id
      * @param Pedido $pedido
+     * @return bool
      */
-    public function atualizar(int $id, Pedido $pedido)
+    public function atualizar(Pedido $pedido)
     {
-
+        return $pedido->save();
     }
 
     /**
-     * @param int $id
-     */
-    public function deletar(int $id)
-    {
-
-    }
-
-    /**
-     * Listar todos os clientes
+     * Listar todos os pedidos
+     *
+     * @return Pedido[]|\Illuminate\Database\Eloquent\Collection
      */
     public function listarTodos()
     {
-
+        return Pedido::all();
     }
 
 }

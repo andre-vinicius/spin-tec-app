@@ -23,7 +23,7 @@ class AtualizarClienteHandler extends ClienteHandler
         $email = $command->getEmail();
 
         /** @var Cliente $cliente */
-        $cliente = $this->clienteRepository->buscaId($id);
+        $cliente = $this->clienteRepository->buscaPorId($id);
         $cliente->setNome($nome);
         $cliente->setCpf($cpf);
         $cliente->setEmail($email);

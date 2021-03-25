@@ -13,22 +13,26 @@ class ClienteRepository
 
     /**
      * @param Cliente $cliente
+     * @return bool
      */
     public function cadastrar(Cliente $cliente)
     {
-        $cliente->save();
+        return $cliente->save();
     }
 
     /**
      * @param Cliente $cliente
+     * @return bool
      */
     public function atualizar(Cliente $cliente)
     {
-        $cliente->save();
+        return $cliente->save();
     }
 
     /**
      * Listar todos os clientes
+     *
+     * @return Cliente[]|\Illuminate\Database\Eloquent\Collection
      */
     public function listarTodos()
     {
@@ -37,8 +41,9 @@ class ClienteRepository
 
     /**
      * @param int $id
+     * @return mixed
      */
-    public function buscaId(int $id)
+    public function buscaPorId(int $id)
     {
         return Cliente::find($id);
     }
