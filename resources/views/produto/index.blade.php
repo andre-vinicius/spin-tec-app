@@ -1,173 +1,107 @@
 @extends('common.conteudo')
 @section('conteudo')
     <script>
-        $(document).ready(function(){
-            // Activate tooltip
-            $('[data-toggle="tooltip"]').tooltip();
+        listarProdutos();
 
-            // Select/Deselect checkboxes
-            var checkbox = $('table tbody input[type="checkbox"]');
-            $("#selectAll").click(function(){
-                if(this.checked){
-                    checkbox.each(function(){
-                        this.checked = true;
-                    });
-                } else{
-                    checkbox.each(function(){
-                        this.checked = false;
-                    });
+        function listarProdutos() {
+            $.get('/api/produto', function (data) {
+                var produtos = data.dados;
+                var trHTML = '';
+
+                $('#produtos-tbody').empty();
+
+                $.each(produtos, function (i, produto) {
+                    trHTML += '<tr>';
+                    trHTML += '     <td>' + produto.nome + '</td>';
+                    trHTML += '     <td>' + produto.valorUnitario + '</td>';
+                    trHTML += '     <td>' + produto.codigoBarras + '</td>';
+                    trHTML += '     <td>';
+                    trHTML += '         <a href="#" produto-id="' + produto.idProduto + '" class="edit btn-editar-produto"><i class="material-icons" title="Editar Produto">&#xE254;</i></a>';
+                    trHTML += '         <a href="#" produto-id="' + produto.idProduto + '" class="delete btn-deletar-produto"><i class="material-icons" title="Deletar Produto">&#xE872;</i></a>';
+                    trHTML += '     </td>';
+                    trHTML += '</tr>';
+                });
+
+                $('#produtos-tbody').append(trHTML);
+            });
+        }
+
+        function cadastrarProduto() {
+            var produto = {
+                nome: $('#form-cadastrar #nome-cadastrar').val(),
+                valorUnitario: $('#form-cadastrar #valor-cadastrar').val(),
+                codigoBarras: $('#form-cadastrar #codigo-cadastrar').val(),
+            };
+
+            $.post('/api/produto', produto).done(function (data) {
+                var sucesso = data.sucesso;
+
+                if(sucesso === true) {
+                    listarProdutos();
+                    $('#cadastrar-produto').modal('hide');
+                } else {
+                    alert(data.mensagem);
                 }
             });
-            checkbox.click(function(){
-                if(!this.checked){
-                    $("#selectAll").prop("checked", false);
+        }
+
+        function editarProduto() {
+            var id = $('#form-editar #id-editar').val();
+            var produto = {
+                nome: $('#form-editar #nome-editar').val(),
+                valorUnitario: $('#form-editar #valor-editar').val(),
+                codigoBarra: $('#form-editar #codigo-editar').val(),
+                _method: $('#form-editar #_method-editar').val(),
+                _token: $('#form-editar #_token-editar').val(),
+            };
+
+            $.post('/api/produto/' + id, produto).done(function (data) {
+                var sucesso = data.sucesso;
+
+                if(sucesso === true) {
+                    listarProdutos();
+                    $('#editar-produto').modal('hide');
+                } else {
+                    alert(data.mensagem);
                 }
             });
+        }
+
+        function deletarProduto() {
+
+        }
+
+        $(document).on('click', '.btn-editar-produto', function (e) {
+            e.preventDefault();
+            showModalEditarProduto($(this).attr('produto-id'));
         });
+
+        $(document).on('click', '.btn-deletar-produto', function (e) {
+            e.preventDefault();
+            showModalDeletarProduto($(this).attr('produto-id'));
+        });
+
+        function showModalEditarProduto(id) {
+            $.get('/api/produto/' + id, function (data) {
+                var produto = data.dados;
+
+                console.log(produto);
+
+                $('#form-editar #id-editar').val(produto.idProduto);
+                $('#form-editar #nome-editar').val(produto.nome);
+                $('#form-editar #valor-editar').val(produto.valorUnitario);
+                $('#form-editar #codigo-editar').val(produto.codigoBarras);
+            });
+
+            $('#editar-produto').modal('show');
+        }
+
+        function showModalDeletarProduto(id) {
+            $('#deletar-produto').modal('show');
+        }
     </script>
-
-    <div>
-        <div class="table-responsive">
-            <div class="table-wrapper">
-                <div class="table-title">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h2>Gerenciar <b>Produtos</b></h2>
-                        </div>
-                        <div class="col-sm-6">
-                            <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Cadastrar Produto</span></a>
-                            <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Desativar</span></a>
-                        </div>
-                    </div>
-                </div>
-                <table class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>
-							<span class="custom-checkbox">
-								<input type="checkbox" id="selectAll">
-								<label for="selectAll"></label>
-							</span>
-                        </th>
-                        <th>Nome</th>
-                        <th>Valor Unitário</th>
-                        <th>Código Barras</th>
-                        <th>Ações</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>
-							<span class="custom-checkbox">
-								<input type="checkbox" id="checkbox1" name="options[]" value="1">
-								<label for="checkbox1"></label>
-							</span>
-                        </td>
-                        <td>Thomas Hardy</td>
-                        <td>454445</td>
-                        <td>adasdasdadsada</td>
-                        <td>
-                            <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <!-- Edit Modal HTML -->
-    <div id="addEmployeeModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form>
-                    <div class="modal-header">
-                        <h4 class="modal-title">Add Employee</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>Name</label>
-                            <input type="text" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Address</label>
-                            <textarea class="form-control" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Phone</label>
-                            <input type="text" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                        <input type="submit" class="btn btn-success" value="Add">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Edit Modal HTML -->
-    <div id="editEmployeeModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form>
-                    <div class="modal-header">
-                        <h4 class="modal-title">Edit Employee</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>Name</label>
-                            <input type="text" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Address</label>
-                            <textarea class="form-control" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Phone</label>
-                            <input type="text" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                        <input type="submit" class="btn btn-info" value="Save">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Delete Modal HTML -->
-    <div id="deleteEmployeeModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form>
-                    <div class="modal-header">
-                        <h4 class="modal-title">Delete Employee</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Are you sure you want to delete these Records?</p>
-                        <p class="text-warning"><small>This action cannot be undone.</small></p>
-                    </div>
-                    <div class="modal-footer">
-                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                        <input type="submit" class="btn btn-danger" value="Delete">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+@include('produto.tabela')
+@include('produto.modal.cadastrar')
+@include('produto.modal.deletar')
+@include('produto.modal.editar')
 @endsection

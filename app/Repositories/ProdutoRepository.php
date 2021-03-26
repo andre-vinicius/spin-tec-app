@@ -48,14 +48,22 @@ class ProdutoRepository
         return Produto::find($id);
     }
 
+    /**
+     * @param string $codigoBarras
+     * @return mixed
+     */
     public function buscarPorCodigoBarras(string $codigoBarras)
     {
-
+        return Produto::where('codigoBarras', $codigoBarras);
     }
 
+    /**
+     * @param string $nome
+     * @return mixed
+     */
     public function buscarPorNome(string $nome)
     {
-
+        return Produto::where('nome', $nome);
     }
 
 }

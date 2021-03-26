@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Services\UseCases\Cliente\CadastrarProduto;
+namespace App\Services\UseCases\Produto\CadastrarProduto;
 
 use App\Models\Produto;
 use App\Services\UseCases\Produto\ProdutoHandler;
 
 /**
  * Class CadastrarProdutoHandler
- * @package App\Services\UseCases\Cliente\CadastrarProduto
+ * @package App\Services\UseCases\Produto\CadastrarProduto
  */
 class CadastrarProdutoHandler extends ProdutoHandler
 {
 
     /**
      * @param CadastrarProdutoCommand $command
+     * @return bool
      */
     public function execute(CadastrarProdutoCommand $command)
     {
@@ -24,9 +25,10 @@ class CadastrarProdutoHandler extends ProdutoHandler
         $produto = new Produto();
         $produto->setNome($nome);
         $produto->setCodigoBarras($codigoBarras);
-        $produto->setValorUnitario($valorUnitario);
+        $produto->setValorUnitario((float)$valorUnitario);
+        $produto->setAtivo(false);
 
-        $this->produtoRepository->cadastrar($produto);
+        return $this->produtoRepository->cadastrar($produto);
     }
 
 }

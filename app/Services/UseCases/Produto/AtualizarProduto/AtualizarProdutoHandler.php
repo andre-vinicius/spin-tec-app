@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Services\UseCases\Cliente\AtualizarProduto;
+namespace App\Services\UseCases\Produto\AtualizarProduto;
 
 use App\Models\Produto;
 use App\Services\UseCases\Produto\ProdutoHandler;
 
 /**
  * Class AtualizarProdutoHandler
- * @package App\Services\UseCases\Cliente\AtualizarProduto
+ * @package App\Services\UseCases\Produto\AtualizarProduto
  */
 class AtualizarProdutoHandler extends ProdutoHandler
 {
 
     /**
      * @param AtualizarProdutoCommand $command
+     * @return bool
      */
     public function execute(AtualizarProdutoCommand $command)
     {
@@ -27,7 +28,7 @@ class AtualizarProdutoHandler extends ProdutoHandler
         $produto->setCodigoBarras($codigoBarras);
         $produto->setValorUnitario($valorUnitario);
 
-        $this->produtoRepository->atualizar($produto);
+        return $this->produtoRepository->atualizar($produto);
     }
 
 }

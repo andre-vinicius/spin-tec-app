@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services\UseCases\Cliente\AtualizarProduto;
+namespace App\Services\UseCases\Produto\AtualizarProduto;
 
 /**
  * Class AtualizarProdutoCommand
- * @package App\Services\UseCases\Cliente\AtualizarProduto
+ * @package App\Services\UseCases\Produto\AtualizarProduto
  */
 class AtualizarProdutoCommand
 {

@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\UseCases\ValidacaoException;
-use App\Services\UseCases\Cliente\AtualizarProduto\AtualizarProdutoCommand;
-use App\Services\UseCases\Cliente\AtualizarProduto\AtualizarProdutoHandler;
-use App\Services\UseCases\Cliente\CadastrarProduto\CadastrarProdutoCommand;
-use App\Services\UseCases\Cliente\CadastrarProduto\CadastrarProdutoHandler;
-use App\Services\UseCases\Cliente\DeletarProduto\DeletarProdutoCommand;
-use App\Services\UseCases\Cliente\DeletarProduto\DeletarProdutoHandler;
-use App\Services\UseCases\Cliente\ListarProduto\ListarProdutoCommand;
-use App\Services\UseCases\Cliente\ListarProduto\ListarProdutoHandler;
+use App\Services\UseCases\Produto\AtualizarProduto\AtualizarProdutoCommand;
+use App\Services\UseCases\Produto\AtualizarProduto\AtualizarProdutoHandler;
+use App\Services\UseCases\Produto\CadastrarProduto\CadastrarProdutoCommand;
+use App\Services\UseCases\Produto\CadastrarProduto\CadastrarProdutoHandler;
+use App\Services\UseCases\Produto\DeletarProduto\DeletarProdutoCommand;
+use App\Services\UseCases\Produto\DeletarProduto\DeletarProdutoHandler;
+use App\Services\UseCases\Produto\ListarProduto\ListarProdutoCommand;
+use App\Services\UseCases\Produto\ListarProduto\ListarProdutoHandler;
+use App\Services\UseCases\Produto\BuscarProdutoPorId\BuscarProdutoPorIdCommand;
+use App\Services\UseCases\Produto\BuscarProdutoPorId\BuscarProdutoPorIdHandler;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
@@ -26,7 +28,20 @@ class ProdutoController extends BaseController
      */
     public function index()
     {
-        return response()->json((new ListarProdutoHandler())->execute(new ListarProdutoCommand()));
+        $produtos = (new ListarProdutoHandler())->execute(new ListarProdutoCommand());
+
+        return response()->json(['sucesso' => true, 'dados' => $produtos]);
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function show($id)
+    {
+        $produto = (new BuscarProdutoPorIdHandler())->execute(new BuscarProdutoPorIdCommand($id));
+
+        return response()->json(['sucesso' => true, 'dados' => $produto]);
     }
 
     /**
@@ -44,30 +59,28 @@ class ProdutoController extends BaseController
 
             (new CadastrarProdutoHandler())->execute(new CadastrarProdutoCommand($nome, $valorUnitario, $codigoBarra));
 
-            return reponse()->json(['sucesso' => true, 'mensagem' => 'Cliente cadastrado com sucesso!', 'dados' => []]);
+            return response()->json(['sucesso' => true, 'mensagem' => 'Cliente cadastrado com sucesso!']);
         } catch (ValidacaoException $e) {
-            return reponse()->json(['sucesso' => false, 'mensagem' => $e->getMessage(), 'dados' => []]);
+            return response()->json(['sucesso' => false, 'mensagem' => $e->getMessage()]);
         }
     }
-
 
     /**
      * @param Request $request
      * @return mixed
      */
-    public function update(Request $request)
+    public function update($id, Request $request)
     {
         try {
-            $id = $request->get('id') ?: '';
             $nome = $request->get('nome') ?: '';
             $valorUnitario = $request->get('valorUnitario') ?: '';
             $codigoBarra = $request->get('codigoBarra') ?: '';
 
             (new AtualizarProdutoHandler())->execute(new AtualizarProdutoCommand($id, $nome, $valorUnitario, $codigoBarra));
 
-            return reponse()->json(['sucesso' => true, 'mensagem' => 'Cliente editado com sucesso!', 'dados' => []]);
+            return response()->json(['sucesso' => true, 'mensagem' => 'Cliente editado com sucesso!']);
         } catch (ValidacaoException $e) {
-            return reponse()->json(['sucesso' => false, 'mensagem' => $e->getMessage(), 'dados' => []]);
+            return response()->json(['sucesso' => false, 'mensagem' => $e->getMessage()]);
         }
     }
 
@@ -82,9 +95,9 @@ class ProdutoController extends BaseController
 
             (new DeletarProdutoHandler())->execute(new DeletarProdutoCommand($id));
 
-            return reponse()->json(['sucesso' => true, 'mensagem' => 'Produto desativado com sucesso!', 'dados' => []]);
+            return response()->json(['sucesso' => true, 'mensagem' => 'Produto desativado com sucesso!']);
         } catch (ValidacaoException $e) {
-            return reponse()->json(['sucesso' => false, 'mensagem' => $e->getMessage(), 'dados' => []]);
+            return response()->json(['sucesso' => false, 'mensagem' => $e->getMessage()]);
         }
     }
 

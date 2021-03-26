@@ -48,14 +48,22 @@ class ClienteRepository
         return Cliente::find($id);
     }
 
+    /**
+     * @param string $cpf
+     * @return mixed
+     */
     public function buscarPorCpf(string $cpf)
     {
-
+        return Cliente::where('cpf', $cpf);
     }
 
+    /**
+     * @param string $email
+     * @return mixed
+     */
     public function buscarPorEmail(string $email)
     {
-
+        return Cliente::where('email', $email);
     }
 
 }

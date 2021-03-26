@@ -85,7 +85,7 @@ class Produto extends Model
     /**
      * @param float $valorUnitario
      */
-    public function setValorUnitario(float $valorUnitario)
+    public function setValorUnitario($valorUnitario)
     {
         $this->valorUnitario = $valorUnitario;
     }
@@ -93,7 +93,7 @@ class Produto extends Model
     /**
      * @return float
      */
-    public function getValorUnitario(): float
+    public function getValorUnitario()
     {
         return $this->valorUnitario;
     }

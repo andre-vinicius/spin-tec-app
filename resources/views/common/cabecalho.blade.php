@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
-        <meta name="author" content="">
+        <meta name="author" content="André Vinícius Nascimento da Costa">
 
         <title>SpinTec - Teste de Desenvolvedor Web</title>
 
@@ -21,5 +21,11 @@
 
         <!-- CSS Tabela -->
         <link href="css/tabela.css" rel="stylesheet">
+
+        <!-- jQuery -->
+        <script src="vendor/jquery/jquery.min.js"></script>
+
+        <!-- Core plugin JavaScript-->
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
     </head>
     <body id="page-top">

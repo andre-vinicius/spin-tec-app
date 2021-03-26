@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services\UseCases\Cliente\CadastrarProduto;
+namespace App\Services\UseCases\Produto\CadastrarProduto;
 
 /**
  * Class CadastrarProdutoCommand
- * @package App\Services\UseCases\Cliente\CadastrarProduto
+ * @package App\Services\UseCases\Produto\CadastrarProduto
  */
 class CadastrarProdutoCommand
 {

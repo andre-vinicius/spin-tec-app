@@ -13,7 +13,9 @@ class BuscarClientePeloEmailHandler extends ClienteHandler
 
     public function execute(BuscarClientePeloEmailCommand $command)
     {
+        $email = $command->getEmail();
 
+        return $this->clienteRepository->buscarPorEmail($email);
     }
 
 }

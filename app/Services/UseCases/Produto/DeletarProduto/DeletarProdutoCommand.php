@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services\UseCases\Cliente\DeletarProduto;
+namespace App\Services\UseCases\Produto\DeletarProduto;
 
 /**
  * Class DeletarProdutoCommand
- * @package App\Services\UseCases\Cliente\DeletarProduto
+ * @package App\Services\UseCases\Produto\DeletarProduto
  */
 class DeletarProdutoCommand
 {

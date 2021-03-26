@@ -17,7 +17,7 @@ class AtualizarClienteHandler extends ClienteHandler
      */
     public function execute(AtualizarClienteCommand $command)
     {
-        $id = $command->get('id');
+        $id = $command->getId();
         $nome = $command->getNome();
         $cpf = $command->getCpf();
         $email = $command->getEmail();

@@ -13,7 +13,9 @@ class BuscarClientePeloCPFHandler extends ClienteHandler
 
     public function execute(BuscarClientePeloCPFCommand $command)
     {
+        $cpf = $command->getCpf();
 
+        return $this->clienteRepository->buscarPorCpf($cpf);
     }
 
 }
