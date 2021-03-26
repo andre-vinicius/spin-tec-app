@@ -6,7 +6,7 @@ use App\Exceptions\UseCases\ValidacaoException;
 use App\Services\UseCases\Pedido\AtualizarPedido\AtualizarPedidoCommand;
 use App\Services\UseCases\Pedido\AtualizarPedido\AtualizarPedidoHandler;
 use App\Services\UseCases\Pedido\BuscarPedidoPorId\BuscarPedidoPorIdHandler;
-use App\Services\UseCases\Pedido\BuscarPedidoPorIdCommand;
+use App\Services\UseCases\Pedido\BuscarPedidoPorId\BuscarPedidoPorIdCommand;
 use App\Services\UseCases\Pedido\CadastrarPedido\CadastrarPedidoCommand;
 use App\Services\UseCases\Pedido\CadastrarPedido\CadastrarPedidoHandler;
 use App\Services\UseCases\Pedido\DeletarPedido\DeletarPedidoCommand;
@@ -28,9 +28,9 @@ class PedidoController extends BaseController
      */
     public function index()
     {
-        $produtos = (new ListarPedidoHandler())->execute(new ListarPedidoCommand());
+        $pedidos = (new ListarPedidoHandler())->execute(new ListarPedidoCommand());
 
-        return response()->json(['sucesso' => true, 'dados' => $produtos]);
+        return response()->json(['sucesso' => true, 'dados' => $pedidos]);
     }
 
     /**
@@ -39,16 +39,15 @@ class PedidoController extends BaseController
      */
     public function show($id)
     {
-        $produto = (new BuscarPedidoPorIdHandler())->execute(new BuscarPedidoPorIdCommand($id));
+        $pedido = (new BuscarPedidoPorIdHandler())->execute(new BuscarPedidoPorIdCommand($id));
 
-        return response()->json(['sucesso' => true, 'dados' => $produto]);
+        return response()->json(['sucesso' => true, 'dados' => $pedido]);
     }
 
     /**
-     * Cadastra cliente
-     *
      * @param Request $request
-     * @return mixed
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function store(Request $request)
     {
@@ -59,7 +58,7 @@ class PedidoController extends BaseController
 
             (new CadastrarPedidoHandler())->execute(new CadastrarPedidoCommand($idCliente, $idProduto, $idCliente));
 
-            return response()->json(['sucesso' => true, 'mensagem' => 'Cliente cadastrado com sucesso!']);
+            return response()->json(['sucesso' => true, 'mensagem' => 'Pedido cadastrado com sucesso!']);
         } catch (ValidacaoException $e) {
             return response()->json(['sucesso' => false, 'mensagem' => $e->getMessage()]);
         }
@@ -78,7 +77,7 @@ class PedidoController extends BaseController
 
             (new AtualizarPedidoHandler())->execute(new AtualizarPedidoCommand($id, $idCliente, $idProduto, $quantidade));
 
-            return response()->json(['sucesso' => true, 'mensagem' => 'Cliente editado com sucesso!']);
+            return response()->json(['sucesso' => true, 'mensagem' => 'Pedido editado com sucesso!']);
         } catch (ValidacaoException $e) {
             return response()->json(['sucesso' => false, 'mensagem' => $e->getMessage()]);
         }
@@ -95,7 +94,7 @@ class PedidoController extends BaseController
 
             (new DeletarPedidoHandler())->execute(new DeletarPedidoCommand($id));
 
-            return response()->json(['sucesso' => true, 'mensagem' => 'Produto desativado com sucesso!']);
+            return response()->json(['sucesso' => true, 'mensagem' => 'Pedido desativado com sucesso!']);
         } catch (ValidacaoException $e) {
             return response()->json(['sucesso' => false, 'mensagem' => $e->getMessage()]);
         }

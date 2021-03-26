@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Pedido;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class PedidoRepository
@@ -11,19 +12,47 @@ use App\Models\Pedido;
 class PedidoRepository
 {
 
-
-    public function cadastrar(int $idCliente, int $idProduto, $quantidade)
+    /**
+     * @param int $idCliente
+     * @param int $idProduto
+     * @param int $idStatus
+     * @param $quantidade
+     * @return bool
+     * @throws \Exception
+     */
+    public function cadastrar(int $idCliente, int $idProduto, $idStatus, $quantidade)
     {
+        DB::table('Pedido')->insert(
+            array(
+                'idCliente'     => $idCliente,
+                'idStatus'      => $idStatus,
+                'dataPedido'    => (new \DateTime())->format('Y-m-d H:i:s')
+            )
+        );
 
+        $idPedido = DB::getPdo()->lastInsertId();
+
+        DB::table('PedidoItem')->insert(
+            array(
+                'idPedido'      => $idPedido,
+                'idProduto'     => $idProduto,
+                'quantidade'    => $quantidade
+            )
+        );
+
+        return true;
     }
 
     /**
-     * @param Pedido $pedido
+     * @param int $idCliente
+     * @param int $idProduto
+     * @param $idStatus
+     * @param $quantidade
      * @return bool
      */
-    public function atualizar(Pedido $pedido)
+    public function atualizar(int $idCliente, int $idProduto, $idStatus, $quantidade)
     {
-        return $pedido->save();
+        return '';
     }
 
     /**
@@ -33,7 +62,15 @@ class PedidoRepository
      */
     public function listarTodos()
     {
-        return Pedido::all();
+        return DB::table('Pedido')
+            ->join('PedidoItem', 'Pedido.idPedido', '=', 'PedidoItem.idPedido')
+            ->join('Produto', 'PedidoItem.idProduto', '=', 'Produto.idProduto')
+            ->join('Cliente', 'Cliente.idCliente', '=', 'Pedido.idCliente')
+            ->select('Pedido.idPedido',
+                'Cliente.nome as cliente',
+                'Produto.nome as produto',
+                DB::raw('PedidoItem.quantidade * Produto.valorUnitario as total'))
+            ->get()->all();
     }
 
     /**
@@ -42,7 +79,16 @@ class PedidoRepository
      */
     public function bucarPorId(int $id)
     {
-        return Pedido::find($id);
+        return DB::table('Pedido')
+            ->join('PedidoItem', 'Pedido.idPedido', '=', 'PedidoItem.idPedido')
+            ->join('Produto', 'PedidoItem.idProduto', '=', 'Produto.idProduto')
+            ->join('Cliente', 'Cliente.idCliente', '=', 'Pedido.idCliente')
+            ->select('Pedido.idPedido',
+                'Cliente.idCliente',
+                'Produto.idProduto',
+                'PedidoItem.quantidade')
+            ->where('Pedido.idPedido', '=', $id)
+            ->get();
     }
 
 }

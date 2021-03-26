@@ -49,9 +49,9 @@
 
                 $.each(pedidos, function (i, pedido) {
                     trHTML += '<tr>';
-                    trHTML += '     <td>' + pedido.nome + '</td>';
-                    trHTML += '     <td>' + pedido.valorUnitario + '</td>';
-                    trHTML += '     <td>' + pedido.codigoBarras + '</td>';
+                    trHTML += '     <td>' + pedido.cliente + '</td>';
+                    trHTML += '     <td>' + pedido.produto + '</td>';
+                    trHTML += '     <td>' + pedido.total + '</td>';
                     trHTML += '     <td>';
                     trHTML += '         <a href="#" pedido-id="' + pedido.idPedido + '" class="edit btn-editar-pedido"><i class="material-icons" title="Editar Pedido">&#xE254;</i></a>';
                     trHTML += '         <a href="#" pedido-id="' + pedido.idPedido + '" class="delete btn-deletar-pedido"><i class="material-icons" title="Deletar Pedido">&#xE872;</i></a>';
@@ -65,9 +65,9 @@
 
         function cadastrarPedido() {
             var pedido = {
-                nome: $('#form-cadastrar #nome-cadastrar').val(),
-                valorUnitario: $('#form-cadastrar #valor-cadastrar').val(),
-                codigoBarras: $('#form-cadastrar #codigo-cadastrar').val(),
+                cliente: $('#form-cadastrar #cliente-cadastrar').val(),
+                produto: $('#form-cadastrar #produto-cadastrar').val(),
+                quantidade: $('#form-cadastrar #quantidade-cadastrar').val(),
             };
 
             $.post('/api/pedido', pedido).done(function (data) {
@@ -85,9 +85,9 @@
         function editarPedido() {
             var id = $('#form-editar #id-editar').val();
             var pedido = {
-                nome: $('#form-editar #nome-editar').val(),
-                valorUnitario: $('#form-editar #valor-editar').val(),
-                codigoBarra: $('#form-editar #codigo-editar').val(),
+                cliente: $('#form-editar #cliente-cadastrar').val(),
+                produto: $('#form-editar #produto-cadastrar').val(),
+                quantidade: $('#form-editar #quantidade-cadastrar').val(),
                 _method: $('#form-editar #_method-editar').val(),
                 _token: $('#form-editar #_token-editar').val(),
             };
@@ -120,14 +120,14 @@
 
         function showModalEditarPedido(id) {
             $.get('/api/pedido/' + id, function (data) {
-                var pedido = data.dados;
+                var pedido = data.dados[0];
 
                 console.log(pedido);
 
                 $('#form-editar #id-editar').val(pedido.idPedido);
-                $('#form-editar #nome-editar').val(pedido.nome);
-                $('#form-editar #valor-editar').val(pedido.valorUnitario);
-                $('#form-editar #codigo-editar').val(pedido.codigoBarras);
+                $('#form-editar #cliente-editar').val(pedido.idCliente);
+                $('#form-editar #produto-editar').val(pedido.idProduto);
+                $('#form-editar #quantidade-editar').val(pedido.quantidade);
             });
 
             $('#editar-pedido').modal('show');

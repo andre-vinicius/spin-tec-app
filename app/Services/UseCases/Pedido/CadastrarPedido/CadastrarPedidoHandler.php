@@ -16,14 +16,21 @@ use App\Services\UseCases\Produto\BuscarProdutoPorId\BuscarProdutoPorIdHandler;
 class CadastrarPedidoHandler extends PedidoHandler
 {
 
+    /**
+     * @param CadastrarPedidoCommand $command
+     * @throws \Exception
+     */
     public function execute(CadastrarPedidoCommand $command)
     {
         $idCliente = $command->getIdCliente();
         $idProduto = $command->getIdProduto();
+        $idStatus = null;
         $quantidade = $command->getQuantidade();
 
         $cliente = (new BuscarClientePeloIdHandler())->execute(new BuscarClientePeloIdCommand($idCliente));
         $produto = (new BuscarProdutoPorIdHandler())->execute(new BuscarProdutoPorIdCommand($idProduto));
+
+        $this->pedidoRepository->cadastrar($idCliente,  $idProduto, $idStatus, $quantidade);
     }
 
 }

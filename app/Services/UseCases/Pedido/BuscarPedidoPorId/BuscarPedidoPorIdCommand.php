@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\UseCases\Pedido;
+namespace App\Services\UseCases\Pedido\BuscarPedidoPorId;
 
 /**
  * Class BuscarPedidoPorIdCommand

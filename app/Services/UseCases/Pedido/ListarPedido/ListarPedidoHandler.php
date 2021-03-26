@@ -13,10 +13,11 @@ class ListarPedidoHandler extends PedidoHandler
 
     /**
      * @param ListarPedidoCommand $command
+     * @return \App\Models\Pedido[]|\Illuminate\Database\Eloquent\Collection
      */
     public function execute(ListarPedidoCommand $command)
     {
-
+        return $this->pedidoRepository->listarTodos();
     }
 
 }

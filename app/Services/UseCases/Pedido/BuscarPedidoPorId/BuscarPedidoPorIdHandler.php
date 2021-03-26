@@ -2,7 +2,6 @@
 
 namespace App\Services\UseCases\Pedido\BuscarPedidoPorId;
 
-use App\Services\UseCases\Pedido\BuscarPedidoPorIdCommand;
 use App\Services\UseCases\Pedido\PedidoHandler;
 
 /**
@@ -14,7 +13,9 @@ class BuscarPedidoPorIdHandler extends PedidoHandler
 
     public function execute(BuscarPedidoPorIdCommand $command)
     {
+        $id = $command->getId();
 
+        return $this->pedidoRepository->bucarPorId($id);
     }
 
 }
