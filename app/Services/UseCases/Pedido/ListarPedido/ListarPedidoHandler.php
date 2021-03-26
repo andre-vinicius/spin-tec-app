@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services\UseCases\Cliente\ListarPedido;
+namespace App\Services\UseCases\Pedido\ListarPedido;
 
 use App\Services\UseCases\Pedido\PedidoHandler;
 
 /**
  * Class ListarPedidoHandler
- * @package App\Services\UseCases\Cliente\ListarPedido
+ * @package App\Services\UseCases\Pedido\ListarPedido
  */
 class ListarPedidoHandler extends PedidoHandler
 {

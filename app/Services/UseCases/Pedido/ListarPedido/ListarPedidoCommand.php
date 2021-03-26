@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services\UseCases\Cliente\ListarPedido;
+namespace App\Services\UseCases\Pedido\ListarPedido;
 
 /**
  * Class ListarPedidoCommand
- * @package App\Services\UseCases\Cliente\ListarPedido
+ * @package App\Services\UseCases\Pedido\ListarPedido
  */
 class ListarPedidoCommand
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services\UseCases\Cliente\DeletarPedido;
+namespace App\Services\UseCases\Pedido\DeletarPedido;
 
 use App\Services\UseCases\Pedido\PedidoHandler;
 
 /**
  * Class DeletarPedidoHandler
- * @package App\Services\UseCases\Cliente\DeletarPedido
+ * @package App\Services\UseCases\Pedido\DeletarPedido
  */
 class DeletarPedidoHandler extends PedidoHandler
 {

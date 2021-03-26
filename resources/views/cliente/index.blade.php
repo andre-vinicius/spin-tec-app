@@ -85,8 +85,6 @@
             $.get('/api/cliente/' + id, function (data) {
                 var cliente = data.dados;
 
-                console.log(cliente);
-
                 $('#form-editar #id-editar').val(cliente.idCliente);
                 $('#form-editar #nome-editar').val(cliente.nome);
                 $('#form-editar #cpf-editar').val(cliente.cpf);
@@ -97,6 +95,10 @@
         }
 
         function showModalDeletarCliente(id) {
+            $.get('/api/cliente/' + id, function (data) {
+                var cliente = data.dados;
+            });
+
             $('#deletar-cliente').modal('show');
         }
     </script>

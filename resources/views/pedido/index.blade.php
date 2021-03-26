@@ -2,6 +2,43 @@
 @section('conteudo')
     <script>
         listarPedidos();
+        listarTodosClientes();
+        listarTodosProdutos();
+
+
+        function listarTodosClientes() {
+            $.get('/api/cliente', function (data) {
+                var clientes = data.dados;
+                var clienteHTML = '';
+
+                $('#cliente-cadastrar').find('option').remove('');
+                $('#cliente-editar').find('option').remove('');
+
+                $.each(clientes, function (i, cliente) {
+                    clienteHTML += '<option value="' + cliente.idCliente + '">' + cliente.nome + '</option>'
+                });
+
+                $('#cliente-cadastrar').append(clienteHTML);
+                $('#cliente-editar').append(clienteHTML);
+            });
+        }
+
+        function listarTodosProdutos() {
+            $.get('/api/produto', function (data) {
+                var produtos = data.dados;
+                var produtoHTML = '';
+
+                $('#produto-cadastrar').find('option').remove('');
+                $('#produto-editar').find('option').remove('');
+
+                $.each(produtos, function (i, produto) {
+                    produtoHTML += '<option value="' + produto.idProduto + '">' + produto.nome + '</option>'
+                });
+
+                $('#produto-cadastrar').append(produtoHTML);
+                $('#produto-editar').append(produtoHTML);
+            });
+        }
 
         function listarPedidos() {
             $.get('/api/pedido', function (data) {

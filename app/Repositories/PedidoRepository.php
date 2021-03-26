@@ -11,13 +11,10 @@ use App\Models\Pedido;
 class PedidoRepository
 {
 
-    /**
-     * @param Pedido $pedido
-     * @return bool
-     */
-    public function cadastrar(Pedido $pedido)
+
+    public function cadastrar(int $idCliente, int $idProduto, $quantidade)
     {
-        return $pedido->save();
+
     }
 
     /**
@@ -37,6 +34,15 @@ class PedidoRepository
     public function listarTodos()
     {
         return Pedido::all();
+    }
+
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    public function bucarPorId(int $id)
+    {
+        return Pedido::find($id);
     }
 
 }

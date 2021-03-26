@@ -13,16 +13,18 @@
                     <input type="hidden" id="id-editar" name="id">
 
                     <div class="form-group">
-                        <label for="nomeEditar">Nome</label>
-                        <input type="text" class="form-control" id="nome-editar" name="nome" required>
+                        <label for="cliente-editar">Cliente</label>
+                        <select type="text" class="form-control" id="cliente-editar" name="cliente" required>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label for="cpfEditar">CPF</label>
-                        <input type="text" class="form-control" id="cpf-editar" name="cpf" required>
+                        <label for="produto-editar">Produto</label>
+                        <select type="text" class="form-control" id="produto-editar" name="produto" required>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label for="emailEditar">E-mail</label>
-                        <input type="email" class="form-control" id="email-editar" name="email" required>
+                        <label for="quantidade-editar">Quantidade</label>
+                        <input type="number" class="form-control" id="quantidade-editar" name="quantidade" required>
                     </div>
                 </div>
                 <div class="modal-footer">

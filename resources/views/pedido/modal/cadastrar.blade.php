@@ -11,16 +11,18 @@
                     <input type="hidden" name="_token-cadastrar" value="{{ csrf_token() }}">
 
                     <div class="form-group">
-                        <label for="nomeCadastrar">Nome</label>
-                        <input type="text" class="form-control" id="nome-cadastrar" name="nome" required>
+                        <label for="cliente-cadastrar">Cliente</label>
+                        <select type="text" class="form-control" id="cliente-cadastrar" name="cliente" required>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label for="cpfCadastrar">CPF</label>
-                        <input type="text" class="form-control" id="cpf-cadastrar" name="cpf" required>
+                        <label for="produto-cadastrar">Produto</label>
+                        <select type="text" class="form-control" id="produto-cadastrar" name="produto" required>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label for="emailCadastrar">E-mail</label>
-                        <input type="email" class="form-control" id="email-cadastrar" name="email" required>
+                        <label for="quantidade-cadastrar">Quantidade</label>
+                        <input type="number" class="form-control" id="quantidade-cadastrar" name="quantidade" required>
                     </div>
                 </div>
                 <div class="modal-footer">
